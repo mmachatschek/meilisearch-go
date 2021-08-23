@@ -14,52 +14,52 @@ jobs:
     name: linter
     runs-on: ubuntu-latest
     steps:
-    - name: Set up Go
-      uses: actions/setup-go@v2
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v2
-    - name: Get dependencies
-      run: |
-        go get -v -t -d ./...
-        if [ -f Gopkg.toml ]; then
-          curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-          dep ensure
-        fi
-        go get -u golang.org/x/lint/golint
-    - name: Run linter
-      run: /home/runner/go/bin/golint
+      - uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_GO: true
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Run linter
+#        uses: golangci/golangci-lint-action@v2
+#        with:
+#          version: v1.42
+#          # Optional: show only new issues if it's a pull request. The default value is `false`.
+#          # only-new-issues: true
 
-  integration_tests:
-    runs-on: ubuntu-latest
-    # Will not run if the event is a PR to bump-meilisearch-v* (so a pre-release PR)
-    # Will still run for each push to bump-meilisearch-v*
-    if: github.event_name != 'pull_request' || !startsWith(github.base_ref, 'bump-meilisearch-v')
-    strategy:
-        matrix:
-          # Current go.mod version and latest stable go version
-          go: [1.14, 1.15]
-          include:
-            - go: 1.14
-              tag: current
-            - go: 1.15
-              tag: latest
-
-    name: integration-tests (go ${{ matrix.tag }} version)
-    steps:
-    - name: Set up Go ${{ matrix.go }}
-      uses: actions/setup-go@v2
-      with:
-        go-version: ${{ matrix.go }}
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v2
-    - name: Get dependencies
-      run: |
-        go get -v -t -d ./...
-        if [ -f Gopkg.toml ]; then
-          curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-          dep ensure
-        fi
-    - name: MeiliSearch setup (latest version) with Docker
-      run: docker run -d -p 7700:7700 getmeili/meilisearch:latest ./meilisearch --master-key=masterKey --no-analytics=true
-    - name: Run integration tests
-      run: go test -v ./...
+#  integration_tests:
+#    runs-on: ubuntu-latest
+#    # Will not run if the event is a PR to bump-meilisearch-v* (so a pre-release PR)
+#    # Will still run for each push to bump-meilisearch-v*
+#    if: github.event_name != 'pull_request' || !startsWith(github.base_ref, 'bump-meilisearch-v')
+#    strategy:
+#        matrix:
+#          # Current go.mod version and latest stable go version
+#          go: [1.16, 1.17]
+#          include:
+#            - go: 1.16
+#              tag: current
+#            - go: 1.17
+#              tag: latest
+#
+#    name: integration-tests (go ${{ matrix.tag }} version)
+#    steps:
+#    - name: Set up Go ${{ matrix.go }}
+#      uses: actions/setup-go@v2
+#      with:
+#        go-version: ${{ matrix.go }}
+#    - name: Check out code into the Go module directory
+#      uses: actions/checkout@v2
+#    - name: Get dependencies
+#      run: |
+#        go get -v -t -d ./...
+#        if [ -f Gopkg.toml ]; then
+#          curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+#          dep ensure
+#        fi
+#    - name: MeiliSearch setup (latest version) with Docker
+#      run: docker run -d -p 7700:7700 getmeili/meilisearch:latest ./meilisearch --master-key=masterKey --no-analytics=true
+#    - name: Run integration tests
+#      run: go test -v ./...

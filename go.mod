@@ -7,5 +7,4 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.7.0
 	github.com/valyala/fasthttp v1.29.0
-	github.com/valyala/fastjson v1.6.3
 )

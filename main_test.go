@@ -100,7 +100,6 @@ func SetUpIndexForFaceting() {
 }
 
 var masterKey = "masterKey"
-var primaryKey = "primaryKey"
 var defaultClient = NewClient(ClientConfig{
 	Host:   "http://localhost:7700",
 	APIKey: masterKey,

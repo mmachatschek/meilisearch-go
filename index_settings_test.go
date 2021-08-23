@@ -79,7 +79,8 @@ func TestIndex_GetDisplayedAttributes(t *testing.T) {
 			gotResp, err := i.GetDisplayedAttributes()
 			require.NoError(t, err)
 			require.Equal(t, tt.wantResp, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -117,7 +118,8 @@ func TestIndex_GetDistinctAttribute(t *testing.T) {
 			gotResp, err := i.GetDistinctAttribute()
 			require.NoError(t, err)
 			require.Empty(t, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -158,7 +160,8 @@ func TestIndex_GetRankingRules(t *testing.T) {
 			gotResp, err := i.GetRankingRules()
 			require.NoError(t, err)
 			require.Equal(t, tt.wantResp, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -199,7 +202,8 @@ func TestIndex_GetSearchableAttributes(t *testing.T) {
 			gotResp, err := i.GetSearchableAttributes()
 			require.NoError(t, err)
 			require.Equal(t, tt.wantResp, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -260,7 +264,8 @@ func TestIndex_GetSettings(t *testing.T) {
 			gotResp, err := i.GetSettings()
 			require.NoError(t, err)
 			require.Equal(t, tt.wantResp, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -298,7 +303,8 @@ func TestIndex_GetStopWords(t *testing.T) {
 			gotResp, err := i.GetStopWords()
 			require.NoError(t, err)
 			require.Empty(t, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -336,7 +342,8 @@ func TestIndex_GetSynonyms(t *testing.T) {
 			gotResp, err := i.GetSynonyms()
 			require.NoError(t, err)
 			require.Empty(t, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -381,13 +388,14 @@ func TestIndex_ResetAttributesForFaceting(t *testing.T) {
 			gotUpdate, err := i.ResetAttributesForFaceting()
 			require.NoError(t, err)
 			require.Equal(t, tt.wantUpdate, gotUpdate)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err := i.GetAttributesForFaceting()
 			require.NoError(t, err)
 			require.Empty(t, gotResp)
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -435,13 +443,14 @@ func TestIndex_ResetDisplayedAttributes(t *testing.T) {
 			gotUpdate, err := i.ResetDisplayedAttributes()
 			require.NoError(t, err)
 			require.Equal(t, tt.wantUpdate, gotUpdate)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err := i.GetDisplayedAttributes()
 			require.NoError(t, err)
 			require.Equal(t, tt.wantResp, gotResp)
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -486,12 +495,14 @@ func TestIndex_ResetDistinctAttribute(t *testing.T) {
 			gotUpdate, err := i.ResetDistinctAttribute()
 			require.NoError(t, err)
 			require.Equal(t, tt.wantUpdate, gotUpdate)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err := i.GetDistinctAttribute()
 			require.NoError(t, err)
 			require.Empty(t, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -539,12 +550,14 @@ func TestIndex_ResetRankingRules(t *testing.T) {
 			gotUpdate, err := i.ResetRankingRules()
 			require.NoError(t, err)
 			require.Equal(t, tt.wantUpdate, gotUpdate)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err := i.GetRankingRules()
 			require.NoError(t, err)
 			require.Equal(t, tt.wantResp, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -592,12 +605,14 @@ func TestIndex_ResetSearchableAttributes(t *testing.T) {
 			gotUpdate, err := i.ResetSearchableAttributes()
 			require.NoError(t, err)
 			require.Equal(t, tt.wantUpdate, gotUpdate)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err := i.GetSearchableAttributes()
 			require.NoError(t, err)
 			require.Equal(t, tt.wantResp, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -665,12 +680,14 @@ func TestIndex_ResetSettings(t *testing.T) {
 			gotUpdate, err := i.ResetSettings()
 			require.NoError(t, err)
 			require.Equal(t, tt.wantUpdate, gotUpdate)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err := i.GetSettings()
 			require.NoError(t, err)
 			require.Equal(t, tt.wantResp, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -715,12 +732,14 @@ func TestIndex_ResetStopWords(t *testing.T) {
 			gotUpdate, err := i.ResetStopWords()
 			require.NoError(t, err)
 			require.Equal(t, tt.wantUpdate, gotUpdate)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err := i.GetStopWords()
 			require.NoError(t, err)
 			require.Empty(t, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -765,12 +784,14 @@ func TestIndex_ResetSynonyms(t *testing.T) {
 			gotUpdate, err := i.ResetSynonyms()
 			require.NoError(t, err)
 			require.Equal(t, tt.wantUpdate, gotUpdate)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err := i.GetSynonyms()
 			require.NoError(t, err)
 			require.Empty(t, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -826,12 +847,14 @@ func TestIndex_UpdateAttributesForFaceting(t *testing.T) {
 			gotUpdate, err := i.UpdateAttributesForFaceting(&tt.args.request)
 			require.NoError(t, err)
 			require.Equal(t, tt.wantUpdate, gotUpdate)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err = i.GetAttributesForFaceting()
 			require.NoError(t, err)
 			require.Equal(t, &tt.args.request, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -890,12 +913,14 @@ func TestIndex_UpdateDisplayedAttributes(t *testing.T) {
 			gotUpdate, err := i.UpdateDisplayedAttributes(&tt.args.request)
 			require.NoError(t, err)
 			require.Equal(t, tt.wantUpdate, gotUpdate)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err = i.GetDisplayedAttributes()
 			require.NoError(t, err)
 			require.Equal(t, &tt.args.request, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -947,12 +972,14 @@ func TestIndex_UpdateDistinctAttribute(t *testing.T) {
 			gotUpdate, err := i.UpdateDistinctAttribute(tt.args.request)
 			require.NoError(t, err)
 			require.Equal(t, tt.wantUpdate, gotUpdate)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err = i.GetDistinctAttribute()
 			require.NoError(t, err)
 			require.Equal(t, &tt.args.request, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -1011,12 +1038,14 @@ func TestIndex_UpdateRankingRules(t *testing.T) {
 			gotUpdate, err := i.UpdateRankingRules(&tt.args.request)
 			require.NoError(t, err)
 			require.Equal(t, tt.wantUpdate, gotUpdate)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err = i.GetRankingRules()
 			require.NoError(t, err)
 			require.Equal(t, &tt.args.request, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -1075,12 +1104,14 @@ func TestIndex_UpdateSearchableAttributes(t *testing.T) {
 			gotUpdate, err := i.UpdateSearchableAttributes(&tt.args.request)
 			require.NoError(t, err)
 			require.Equal(t, tt.wantUpdate, gotUpdate)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err = i.GetSearchableAttributes()
 			require.NoError(t, err)
 			require.Equal(t, &tt.args.request, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -1195,12 +1226,14 @@ func TestIndex_UpdateSettings(t *testing.T) {
 			gotUpdate, err := i.UpdateSettings(&tt.args.request)
 			require.NoError(t, err)
 			require.Equal(t, tt.wantUpdate, gotUpdate)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err = i.GetSettings()
 			require.NoError(t, err)
 			require.Equal(t, &tt.args.request, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -1654,7 +1687,10 @@ func TestIndex_UpdateSettingsOneByOne(t *testing.T) {
 			gotUpdate, err := i.UpdateSettings(&tt.args.firstRequest)
 			require.NoError(t, err)
 			require.Equal(t, tt.wantUpdate, gotUpdate)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err = i.GetSettings()
 			require.NoError(t, err)
@@ -1663,12 +1699,14 @@ func TestIndex_UpdateSettingsOneByOne(t *testing.T) {
 			gotUpdate, err = i.UpdateSettings(&tt.args.secondRequest)
 			require.NoError(t, err)
 			require.GreaterOrEqual(t, gotUpdate.UpdateID, tt.wantUpdate.UpdateID)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err = i.GetSettings()
 			require.NoError(t, err)
 			require.Equal(t, &tt.args.secondResponse, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -1720,12 +1758,14 @@ func TestIndex_UpdateStopWords(t *testing.T) {
 			gotUpdate, err := i.UpdateStopWords(&tt.args.request)
 			require.NoError(t, err)
 			require.Equal(t, tt.wantUpdate, gotUpdate)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err = i.GetStopWords()
 			require.NoError(t, err)
 			require.Equal(t, &tt.args.request, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -1777,12 +1817,14 @@ func TestIndex_UpdateSynonyms(t *testing.T) {
 			gotUpdate, err := i.UpdateSynonyms(&tt.args.request)
 			require.NoError(t, err)
 			require.Equal(t, tt.wantUpdate, gotUpdate)
-			i.DefaultWaitForPendingUpdate(gotUpdate)
+			_, err = i.DefaultWaitForPendingUpdate(gotUpdate)
+			require.NoError(t, err)
 
 			gotResp, err = i.GetSynonyms()
 			require.NoError(t, err)
 			require.Equal(t, &tt.args.request, gotResp)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }

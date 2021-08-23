@@ -149,15 +149,18 @@ func TestIndex_AddDocuments(t *testing.T) {
 			} else {
 				require.GreaterOrEqual(t, gotResp.UpdateID, tt.wantResp.UpdateID)
 				require.NoError(t, err)
-				i.DefaultWaitForPendingUpdate(gotResp)
+				_, err = i.DefaultWaitForPendingUpdate(gotResp)
+				require.NoError(t, err)
 
 				var documents []map[string]interface{}
-				i.GetDocuments(&DocumentsRequest{
+				err = i.GetDocuments(&DocumentsRequest{
 					Limit: 3,
 				}, &documents)
+				require.NoError(t, err)
 				require.Equal(t, tt.args.documentsPtr, documents)
 			}
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -257,15 +260,17 @@ func TestIndex_AddDocumentsWithPrimaryKey(t *testing.T) {
 			gotResp, err := i.AddDocumentsWithPrimaryKey(tt.args.documentsPtr, tt.args.primaryKey)
 			require.GreaterOrEqual(t, gotResp.UpdateID, tt.wantResp.UpdateID)
 			require.NoError(t, err)
-			i.DefaultWaitForPendingUpdate(gotResp)
+			_, err = i.DefaultWaitForPendingUpdate(gotResp)
+			require.NoError(t, err)
 
 			var documents []map[string]interface{}
-			i.GetDocuments(&DocumentsRequest{
+			err = i.GetDocuments(&DocumentsRequest{
 				Limit: 3,
 			}, &documents)
+			require.NoError(t, err)
 			require.Equal(t, tt.args.documentsPtr, documents)
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -310,15 +315,17 @@ func TestIndex_DeleteAllDocuments(t *testing.T) {
 			gotResp, err := i.DeleteAllDocuments()
 			require.NoError(t, err)
 			require.Equal(t, gotResp, tt.wantResp)
-			i.DefaultWaitForPendingUpdate(gotResp)
+			_, err = i.DefaultWaitForPendingUpdate(gotResp)
+			require.NoError(t, err)
 
 			var documents interface{}
-			i.GetDocuments(&DocumentsRequest{
+			err = i.GetDocuments(&DocumentsRequest{
 				Limit: 5,
 			}, &documents)
+			require.NoError(t, err)
 			require.Empty(t, documents)
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -433,17 +440,21 @@ func TestIndex_DeleteOneDocument(t *testing.T) {
 			gotAddResp, err := i.AddDocuments(tt.args.documentsPtr)
 			require.GreaterOrEqual(t, gotAddResp.UpdateID, tt.wantResp.UpdateID)
 			require.NoError(t, err)
-			i.DefaultWaitForPendingUpdate(gotAddResp)
+			_, err = i.DefaultWaitForPendingUpdate(gotAddResp)
+			require.NoError(t, err)
 
 			gotResp, err := i.DeleteDocument(tt.args.identifier)
 			require.NoError(t, err)
 			require.GreaterOrEqual(t, gotResp.UpdateID, tt.wantResp.UpdateID)
-			i.DefaultWaitForPendingUpdate(gotResp)
+			_, err = i.DefaultWaitForPendingUpdate(gotResp)
+			require.NoError(t, err)
 
 			var document []map[string]interface{}
 			err = i.GetDocument(tt.args.identifier, &document)
+			require.NoError(t, err)
 			require.Empty(t, document)
-			deleteAllIndexes(c)
+
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -528,20 +539,23 @@ func TestIndex_DeleteDocuments(t *testing.T) {
 
 			gotAddResp, err := i.AddDocuments(tt.args.documentsPtr)
 			require.NoError(t, err)
-			i.DefaultWaitForPendingUpdate(gotAddResp)
+			_, err = i.DefaultWaitForPendingUpdate(gotAddResp)
+			require.NoError(t, err)
 
 			gotResp, err := i.DeleteDocuments(tt.args.identifier)
 			require.NoError(t, err)
 			require.Equal(t, gotResp, tt.wantResp)
-			i.DefaultWaitForPendingUpdate(gotResp)
+			_, err = i.DefaultWaitForPendingUpdate(gotResp)
+			require.NoError(t, err)
 
 			var document docTest
 			for _, identifier := range tt.args.identifier {
 				err = i.GetDocument(identifier, &document)
+				require.NoError(t, err)
 				require.Empty(t, document)
 			}
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -606,7 +620,7 @@ func TestIndex_GetDocument(t *testing.T) {
 				require.Equal(t, strconv.Itoa(tt.args.documentPtr.BookID), tt.args.identifier)
 			}
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -703,16 +717,18 @@ func TestIndex_UpdateDocuments(t *testing.T) {
 			got, err := i.UpdateDocuments(tt.args.documentsPtr)
 			require.NoError(t, err)
 			require.Equal(t, got, tt.want)
-			i.DefaultWaitForPendingUpdate(got)
+			_, err = i.DefaultWaitForPendingUpdate(got)
+			require.NoError(t, err)
 
 			var document docTestBooks
 			for _, identifier := range tt.args.documentsPtr {
 				err = i.GetDocument(strconv.Itoa(identifier.BookID), &document)
+				require.NoError(t, err)
 				require.Equal(t, identifier.BookID, document.BookID)
 				require.Equal(t, identifier.Title, document.Title)
 			}
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -815,16 +831,18 @@ func TestIndex_UpdateDocumentsWithPrimaryKey(t *testing.T) {
 			got, err := i.UpdateDocumentsWithPrimaryKey(tt.args.documentsPtr, tt.args.primaryKey)
 			require.NoError(t, err)
 			require.Equal(t, got, tt.want)
-			i.DefaultWaitForPendingUpdate(got)
+			_, err = i.DefaultWaitForPendingUpdate(got)
+			require.NoError(t, err)
 
 			var document docTestBooks
 			for _, identifier := range tt.args.documentsPtr {
 				err = i.GetDocument(strconv.Itoa(identifier.BookID), &document)
+				require.NoError(t, err)
 				require.Equal(t, identifier.BookID, document.BookID)
 				require.Equal(t, identifier.Title, document.Title)
 			}
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }

@@ -203,7 +203,7 @@ func TestIndex_GetStats(t *testing.T) {
 			require.NoError(t, err)
 			require.Equal(t, tt.wantResp, gotResp)
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -249,7 +249,7 @@ func Test_newIndex(t *testing.T) {
 			require.Equal(t, tt.want.UID, got.UID)
 			require.Equal(t, tt.want.client, got.client)
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -322,7 +322,6 @@ func TestIndex_GetAllUpdateStatus(t *testing.T) {
 	type args struct {
 		UID      string
 		client   *Client
-		document []docTest
 	}
 	tests := []struct {
 		name     string
@@ -427,7 +426,7 @@ func TestIndex_DefaultWaitForPendingUpdate(t *testing.T) {
 			require.NoError(t, err)
 			require.Equal(t, tt.want, got)
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -538,7 +537,7 @@ func TestIndex_WaitForPendingUpdate(t *testing.T) {
 				require.Equal(t, tt.want, got)
 			}
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -587,7 +586,7 @@ func TestIndex_FetchInfo(t *testing.T) {
 			require.Equal(t, tt.wantResp.UID, gotResp.UID)
 			require.Equal(t, tt.wantResp.PrimaryKey, gotResp.PrimaryKey)
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -629,7 +628,7 @@ func TestIndex_FetchPrimaryKey(t *testing.T) {
 			require.NoError(t, err)
 			require.Equal(t, &tt.wantPrimaryKey, gotPrimaryKey)
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -688,7 +687,7 @@ func TestIndex_UpdateIndex(t *testing.T) {
 			require.Equal(t, tt.wantResp.UID, gotResp.UID)
 			require.Equal(t, tt.wantResp.PrimaryKey, gotResp.PrimaryKey)
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }

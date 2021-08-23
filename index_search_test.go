@@ -276,7 +276,7 @@ func TestIndex_Search(t *testing.T) {
 			require.Equal(t, tt.want.FacetsDistribution, got.FacetsDistribution)
 			require.Equal(t, tt.want.ExhaustiveFacetsCount, got.ExhaustiveFacetsCount)
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -437,7 +437,8 @@ func TestIndex_SearchFacets(t *testing.T) {
 			i := c.Index(tt.args.UID)
 
 			update, _ := i.UpdateAttributesForFaceting(&tt.args.facet)
-			i.DefaultWaitForPendingUpdate(update)
+			_, err := i.DefaultWaitForPendingUpdate(update)
+			require.NoError(t, err)
 
 			got, err := i.Search(tt.args.query, &tt.args.request)
 			require.NoError(t, err)
@@ -459,7 +460,7 @@ func TestIndex_SearchFacets(t *testing.T) {
 			}
 			require.Equal(t, tt.want.ExhaustiveFacetsCount, got.ExhaustiveFacetsCount)
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }

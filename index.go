@@ -16,8 +16,6 @@ type IndexConfig struct {
 
 	// PrimaryKey is optional
 	PrimaryKey string
-
-	client *Client
 }
 
 type IndexInterface interface {

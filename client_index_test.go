@@ -176,7 +176,7 @@ func TestClient_CreateIndex(t *testing.T) {
 				}
 			}
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -369,7 +369,7 @@ func TestClient_DeleteIndex(t *testing.T) {
 				}
 			}
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -468,7 +468,7 @@ func TestClient_GetAllIndexes(t *testing.T) {
 			require.NoError(t, err)
 			require.Equal(t, len(tt.wantResp), len(gotResp))
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -476,7 +476,6 @@ func TestClient_GetAllIndexes(t *testing.T) {
 func TestClient_GetIndex(t *testing.T) {
 	type args struct {
 		config     IndexConfig
-		createdUid string
 		uid        string
 	}
 	tests := []struct {
@@ -551,6 +550,7 @@ func TestClient_GetIndex(t *testing.T) {
 			c := tt.client
 
 			gotCreatedResp, err := c.CreateIndex(&tt.args.config)
+			require.NoError(t, err)
 			gotResp, err := c.GetIndex(tt.args.uid)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetIndex() error = %v, wantErr %v", err, tt.wantErr)
@@ -566,7 +566,7 @@ func TestClient_GetIndex(t *testing.T) {
 				require.Equal(t, gotCreatedResp.PrimaryKey, gotResp.PrimaryKey)
 			}
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
@@ -631,7 +631,7 @@ func TestClient_GetOrCreateIndex(t *testing.T) {
 				require.Equal(t, tt.wantResp.PrimaryKey, gotResp.PrimaryKey)
 			}
 
-			deleteAllIndexes(c)
+			_, _ = deleteAllIndexes(c)
 		})
 	}
 }
